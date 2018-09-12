@@ -14,6 +14,7 @@ class UserViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        title = "User"
     }
 
     override func didReceiveMemoryWarning() {

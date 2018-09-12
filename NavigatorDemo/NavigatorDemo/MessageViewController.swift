@@ -14,6 +14,7 @@ class MessageViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        title = "Message"
     }
 
     override func didReceiveMemoryWarning() {

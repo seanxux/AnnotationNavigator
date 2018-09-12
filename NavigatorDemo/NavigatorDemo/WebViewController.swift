@@ -26,6 +26,8 @@ class WebViewController: BaseViewController, InitRoutable {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor.red
+        title = "Web"
     }
 
     override func didReceiveMemoryWarning() {

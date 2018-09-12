@@ -13,20 +13,19 @@ class HomeViewController: BaseViewController {
     @IBOutlet var tableView: UITableView!
     
     var urls: [[String: String]] = [
-        ["title": "详情", "url": "navidemo://demo-navigator.com/detail"],
-        ["title": "详情", "url": "navidemo://demo-navigator.com/detail"],
-        ["title": "详情", "url": "navidemo://demo-navigator.com/detail"],
-        ["title": "详情", "url": "navidemo://demo-navigator.com/detail"],
+        ["title": "detail", "url": "navidemo://demo-navigator.com/detail"],
+        ["title": "detail with parameter", "url": "navidemo://demo-navigator.com/detail?name=A&uuid=111"],
+        ["title": "detail(present)", "url": "navidemo://demo-navigator.com/detail?name=A&uuid=111&transition=present"],
+        ["title": "web", "url": "navidemo://demo-navigator.com/web?url=xxx"],
     ]
     var schemes: [[String: Any]] = [
-        ["title": "详情", "scheme": RouterParameter.detail(name: "AAA", uuid: "123")],
-        ["title": "详情", "scheme": RouterParameter.detail(name: "AAA", uuid: "123")],
-        ["title": "详情", "scheme": RouterParameter.detail(name: "AAA", uuid: "123")],
-        ["title": "详情", "scheme": RouterParameter.detail(name: "AAA", uuid: "123")]
+        ["title": "detail scheme", "scheme": RouterParameter.detail(name: "AAA", uuid: "123")],
+        ["title": "web scheme", "scheme": RouterParameter.web(url: "https://www.google.com")]
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Home"
     }
     
 }
@@ -51,10 +50,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         if indexPath.section == 0 {
             cell.textLabel?.text = urls[indexPath.row]["title"]
-            cell.detailTextLabel?.text = "PUSH"
+            cell.detailTextLabel?.text = urls[indexPath.row]["url"]
         } else {
             cell.textLabel?.text = schemes[indexPath.row]["title"] as? String
-            cell.detailTextLabel?.text = "PUSH"
+            if let parameter = schemes[indexPath.row]["scheme"] as? RouterParameter {
+                cell.detailTextLabel?.text = ".\(parameter)"
+            }
         }
         return cell
     }
@@ -64,7 +65,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.section == 0 {
             if let urlString = urls[indexPath.row]["url"], let url = URL(string: urlString) {
-                navigator.push(url)
+                navigator.open(url)
             }
         } else {
             if let scheme = schemes[indexPath.row]["scheme"] as? RouterParameter {

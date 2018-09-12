@@ -18,7 +18,7 @@
 		4DF27BB62092ED7000CCE9D9 /* NavigatorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF27BAD2092ED7000CCE9D9 /* NavigatorMap.swift */; };
 		4DF27BB72092ED7000CCE9D9 /* Navigator.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 4DF27BAF2092ED7000CCE9D9 /* Navigator.stencil */; };
 		4DF27BB82092ED7000CCE9D9 /* Router.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 4DF27BB02092ED7000CCE9D9 /* Router.stencil */; };
-		4DF27BBA2092EDD000CCE9D9 /* WeexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF27BB92092EDD000CCE9D9 /* WeexViewController.swift */; };
+		4DF27BBA2092EDD000CCE9D9 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF27BB92092EDD000CCE9D9 /* CustomViewController.swift */; };
 		D4031CAF2121A5A000B3D165 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4031CAE2121A5A000B3D165 /* TabBarController.swift */; };
 		D4031CB12121A5B400B3D165 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4031CB02121A5B400B3D165 /* HomeViewController.swift */; };
 		D4031CB32121A5BD00B3D165 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4031CB22121A5BD00B3D165 /* UserViewController.swift */; };
@@ -46,7 +46,7 @@
 		4DF27BAD2092ED7000CCE9D9 /* NavigatorMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigatorMap.swift; sourceTree = "<group>"; };
 		4DF27BAF2092ED7000CCE9D9 /* Navigator.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Navigator.stencil; sourceTree = "<group>"; };
 		4DF27BB02092ED7000CCE9D9 /* Router.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Router.stencil; sourceTree = "<group>"; };
-		4DF27BB92092EDD000CCE9D9 /* WeexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeexViewController.swift; sourceTree = "<group>"; };
+		4DF27BB92092EDD000CCE9D9 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		696782A2DFA0B1BD870F99EF /* Pods-NavigatorDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigatorDemo.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-NavigatorDemo/Pods-NavigatorDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		D4031CAE2121A5A000B3D165 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		D4031CB02121A5B400B3D165 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 				D4031CB22121A5BD00B3D165 /* UserViewController.swift */,
 				D4031CB42121A5C600B3D165 /* DetailViewController.swift */,
 				D4031CB82121A6DC00B3D165 /* WebViewController.swift */,
-				4DF27BB92092EDD000CCE9D9 /* WeexViewController.swift */,
+				4DF27BB92092EDD000CCE9D9 /* CustomViewController.swift */,
 				4DF27B982092ECBF00CCE9D9 /* Main.storyboard */,
 				4DF27B9B2092ECC100CCE9D9 /* Assets.xcassets */,
 				4DF27B9D2092ECC100CCE9D9 /* LaunchScreen.storyboard */,
@@ -301,7 +301,7 @@
 				D4031CB52121A5C600B3D165 /* DetailViewController.swift in Sources */,
 				D4031CB32121A5BD00B3D165 /* UserViewController.swift in Sources */,
 				D4031CAF2121A5A000B3D165 /* TabBarController.swift in Sources */,
-				4DF27BBA2092EDD000CCE9D9 /* WeexViewController.swift in Sources */,
+				4DF27BBA2092EDD000CCE9D9 /* CustomViewController.swift in Sources */,
 				D4031CB12121A5B400B3D165 /* HomeViewController.swift in Sources */,
 				4DF27B972092ECBF00CCE9D9 /* BaseViewController.swift in Sources */,
 				4DF27B952092ECBF00CCE9D9 /* AppDelegate.swift in Sources */,

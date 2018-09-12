@@ -8,7 +8,12 @@
 import UIKit
 
 class BaseViewController: UIViewController, Routable {
-
+    
+    var isPresented: Bool {
+        return navigationController?.viewControllers.count == 1 &&
+            navigationController?.presentingViewController != nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

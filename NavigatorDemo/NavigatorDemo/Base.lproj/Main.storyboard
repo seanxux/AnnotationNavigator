@@ -28,11 +28,11 @@
             </objects>
             <point key="canvasLocation" x="-1080" y="-128"/>
         </scene>
-        <!--Item-->
+        <!--User-->
         <scene sceneID="rmE-Yx-Nlr">
             <objects>
                 <navigationController id="GRr-0Z-B8y" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="sxW-fu-5vI"/>
+                    <tabBarItem key="tabBarItem" title="User" id="sxW-fu-5vI"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LNf-Ve-Qwc">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -64,11 +64,11 @@
             </objects>
             <point key="canvasLocation" x="1009" y="872"/>
         </scene>
-        <!--Item-->
+        <!--Message-->
         <scene sceneID="7Is-q0-Jya">
             <objects>
                 <navigationController id="XqL-hm-oOn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Whn-F0-nEk"/>
+                    <tabBarItem key="tabBarItem" title="Message" id="Whn-F0-nEk"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jdT-kT-eLS">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -100,11 +100,11 @@
             </objects>
             <point key="canvasLocation" x="999" y="74"/>
         </scene>
-        <!--Item-->
+        <!--Home-->
         <scene sceneID="GnL-op-cbP">
             <objects>
                 <navigationController id="20q-BT-4oF" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="bRJ-ia-oVj"/>
+                    <tabBarItem key="tabBarItem" title="Home" id="bRJ-ia-oVj"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xIT-0a-PC5">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -133,7 +133,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellIdentifier" textLabel="KCi-Qw-Nyt" detailTextLabel="aGW-PS-s2S" style="IBUITableViewCellStyleValue1" id="RBT-XK-0FK">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellIdentifier" textLabel="KCi-Qw-Nyt" detailTextLabel="aGW-PS-s2S" style="IBUITableViewCellStyleSubtitle" id="RBT-XK-0FK">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RBT-XK-0FK" id="G0e-cl-DWj">
@@ -141,16 +141,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KCi-Qw-Nyt">
-                                                    <rect key="frame" x="15" y="12" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aGW-PS-s2S">
-                                                    <rect key="frame" x="316" y="12" width="44" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aGW-PS-s2S">
+                                                    <rect key="frame" x="15" y="25.5" width="33" height="14.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

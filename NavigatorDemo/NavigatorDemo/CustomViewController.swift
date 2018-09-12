@@ -8,8 +8,8 @@
 
 import UIKit
 
-// sourcery: router="weex"
-class WeexViewController: UIViewController, CustomRoutable {
+// sourcery: router="custom"
+class CustomViewController: UIViewController, CustomRoutable {
     // sourcery: parameter, alias="title"
     public var pageTitle: String?
     // sourcery: parameter
