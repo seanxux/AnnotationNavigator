@@ -1,4 +1,7 @@
 # Navigator (自动化Router)
+
+![Swift](https://img.shields.io/badge/Swift-4.1-orange.svg)
+
 > 基于sourcery自动生成router定义和注册的代码。工程里已经加了script，添加标注以后，编译一下，就会自动生成router相关的代码
 
 ## Router类型定义
