@@ -3,10 +3,10 @@
 //  GXM-CRM
 //
 //  Created by XUXIAOTENG on 18/12/2017.
-//  Copyright © 2017 SeanXu. All rights reserved.
+//  Copyright © 2017 GuoXiaoMei. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // Router跳转
 protocol Routable {}
@@ -15,25 +15,17 @@ protocol InitRoutable: Routable {}
 // 自定义Router跳转
 protocol CustomRoutable: Routable {}
 
-// sourcery: router="photoView"
-class RouterPhotoViewController: CRMViewController, CustomRoutable {}
-
-// sourcery: router="companyList"
-class RouterCompanyListController: CRMViewController, CustomRoutable {}
-
-// sourcery: router="tabHome"
-class RouterHomeViewController: CRMViewController, CustomRoutable {}
-
 extension RouterType {
-    // 全URL
+    // Full URL
     var url: String {
-        return "gxm-crm://SeanXu.cn" + self.rawValue
+        return Router.scheme + "://" + Router.host + self.rawValue
     }
 }
 
-// Router封装
+// Router
 public struct Router {
-    static let scheme = "gxm-crm"
+    static let scheme = "navidemo"
+    static let host = "demo-navigator.com"
     var type: RouterType
     var parameter: RouterParameter
     var context: [String: Any] = [:]
@@ -103,22 +95,22 @@ public struct Router {
         self.tabIndex = tabIndex
     }
     
-    // Web URL方式初始化
-    init(urlString: String) {
-        self.type = .web
-        self.parameter = .web(url: urlString)
-        self.context = ["url": urlString]
-    }
-    
-    // Weex
-    init(title: String, weex urlString: String, param: [String: Any]? = nil) {
-        self.type = .weex
-        self.parameter = .weex(pageTitle: title, url: urlString, param: param)
-        self.context = ["title": title, "url": urlString]
-        if let param = param {
-            self.context.merge(param) { (_, new) in new }
-        }
-    }
+//    // Web URL方式初始化
+//    init(urlString: String) {
+//        self.type = .web
+//        self.parameter = .web(url: urlString)
+//        self.context = ["url": urlString]
+//    }
+//    
+//    // Weex
+//    init(title: String, weex urlString: String, param: [String: Any]? = nil) {
+//        self.type = .weex
+//        self.parameter = .weex(pageTitle: title, url: urlString, param: param)
+//        self.context = ["title": title, "url": urlString]
+//        if let param = param {
+//            self.context.merge(param) { (_, new) in new }
+//        }
+//    }
     
     func isPresent() -> Bool {
         if let transition = context["transition"] as? String,

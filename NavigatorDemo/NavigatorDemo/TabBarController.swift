@@ -1,17 +1,22 @@
 //
-//  ViewController.swift
+//  TabBarController.swift
 //  NavigatorDemo
 //
-//  Created by XUXIAOTENG on 2018/4/27.
+//  Created by SeanXu on 2018/8/13.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+protocol TabBarControllerType {
+    var inTabBar: Bool { get set }
+}
+
+class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -19,6 +24,4 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
 }
-

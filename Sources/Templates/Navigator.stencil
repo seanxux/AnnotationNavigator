@@ -3,39 +3,46 @@
 //  GXM-CRM
 //
 //  Created by XUXIAOTENG on 27/03/2018.
-//  Copyright © 2018 SeanXu. All rights reserved.
+//  Copyright © 2018 GuoXiaoMei. All rights reserved.
 //
 {# (a, b) #}
 {% macro switchCase variables %}{% if variables|annotated:"parameter" %}({% for param in variables|annotated:"parameter" %}{{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}{% endmacro %}
 {# (a: a, b: b) #}
-{% macro initCase variables %}{% if variables|annotated:"parameter" %}({% for param in variables|annotated:"parameter" %}{{ param.name }}: {{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}{% endmacro %}
+{% macro initCase variables %}{% if variables|annotated:"parameter" %}({% for param in variables|annotated:"parameter" %}{{ param.name }}: {{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %}){% else %}(){% endif %}{% endmacro %}
 {# viewController.a = a #}
 {% macro setControllerParameter variables %}
             {% for param in variables|annotated:"parameter" %}
+            {% if param.typeName|hasSuffix:"?" %}
+            if {{ param.name }} != nil {
+                viewController.{{ param.name }} = {{ param.name }}
+            }
+            {% else %}
             viewController.{{ param.name }} = {{ param.name }}
+            {% endif %}
             {% endfor %}
 {% endmacro %}
 
 import URLNavigator
 
-// swiftlint:disable all
-extension URLNavigationMap {
+// swiftlint:disable superfluous_disable_command
+// swiftlint:disable line_length function_body_length unused_closure_parameter
+extension NavigatorMap {
 
     static func initializeGenerated(navigator: NavigatorType) {
-{% for type in types.implementing.Routable %}
+{% for type in types.based.Routable %}
     {% if type.annotations.router and not type.implements.CustomRoutable %}
         navigator.register(.{{ type.annotations.router }}) { _, _, context in
-            {% if type.allVariables|annotated:"parameter" %}
+            {% if type.variables|annotated:"parameter" %}
             guard let router = context as? Router,
-                case let .{{ type.annotations.router }}{% call switchCase type.allVariables %} = router.parameter else {
+                case let .{{ type.annotations.router }}{% call switchCase type.variables %} = router.parameter else {
                 return nil
             }
             {% endif %}
-            {% if type.implements.InitRoutable %}
-            let viewController = {{ type.name }}{% call initCase type.allVariables %}
+            {% if type.based.InitRoutable %}
+            let viewController = {{ type.name }}{% call initCase type.variables %}
             {% else %}
             let viewController = {{ type.name }}()
-            {% call setControllerParameter type.allVariables %}
+            {% call setControllerParameter type.variables %}
             {% endif %}
             viewController.hidesBottomBarWhenPushed = true
             return viewController
@@ -45,4 +52,4 @@ extension URLNavigationMap {
     }
 
 }
-// swiftlint:enable all
+// swiftlint:enable line_length function_body_length unused_closure_parameter

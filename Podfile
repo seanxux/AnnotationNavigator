@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'NavigatorDemo' do
   pod 'Sourcery'
+  pod 'URLNavigator'
 end
 
 project 'NavigatorDemo/NavigatorDemo.xcodeproj'

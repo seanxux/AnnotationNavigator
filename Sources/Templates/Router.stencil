@@ -3,13 +3,28 @@
 //  GXM-CRM
 //
 //  Created by XUXIAOTENG on 27/03/2018.
-//  Copyright © 2018 SeanXu. All rights reserved.
+//  Copyright © 2018 GuoXiaoMei. All rights reserved.
 //
+import UIKit
 {% macro typeName name %}{{ name|replace:"!","" }}{% endmacro %}
-{% macro urlParameterName variable %}{% if variable.annotations.alias %}{{ variable.annotations.alias }}{% else %}{{ variable.name }}{% endif %}{% endmacro %}
+{% macro urlParameterName variable %}{% if variable.annotations.alias %}{{ variable.annotations.alias }}{% else %}{{ variable.name|camelToSnakeCase }}{% endif %}{% endmacro %}
 {% macro enumCase variables %}{% if variables|annotated:"parameter" %}({% for param in variables|annotated:"parameter" %}{{ param.name }}: {% call typeName param.typeName %}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}{% endmacro %}
 {% macro switchCase variables %}{% if variables|annotated:"parameter" %}({% for param in variables|annotated:"parameter" %}{{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}{% endmacro %}
 {% macro initCase variables %}{% if variables|annotated:"parameter" %}({% for param in variables|annotated:"parameter" %}{{ param.name }}: {{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}{% endmacro %}
+{% macro mapEnum param %}
+                var {{ param.name }}: {% call typeName param.typeName %}
+                let {{ param.name }}Raw: {{ param.type.rawTypeName }}? = try parameter.get("{% call urlParameterName param %}")
+                if let {{ param.name }}Raw = {{ param.name }}Raw,
+                    let {{ param.name }}Enum = {{ param.type.name }}(rawValue: {{ param.name }}Raw) {
+                    {{ param.name }} = {{ param.name }}Enum
+                {% if param.isOptional and not param.isImplicitlyUnwrappedOptional %}
+                }
+                {% else %}
+                } else {
+                    throw RouterError.typeNotMatch
+                }
+                {% endif %}
+{% endmacro %}
 {% macro mapArray param %}
                 var {{ param.name }}: {{ param.typeName }}
                 {% if param.typeName|hasSuffix:"?" %}
@@ -32,11 +47,31 @@
                 {% else %}
                 if let {{ param.name }}Array = Router.parseJSONString(JSONString: {{ param.name }}Temp) as? {{ param.typeName }} {
                     {{ param.name }} = {{ param.name }}Array
+                } else {
+                    throw RouterError.typeNotMatch
                 }
                 {% endif %}
                 {% endif %}
 {% endmacro %}
 {% macro mapArrayModel param %}
+                var {{ param.name }}: {{ param.typeName }}
+                {% if param.typeName|hasSuffix:"?" %}
+                let {{ param.name }}Temp: String? = try parameter.get("{% call urlParameterName param %}")
+                if let {{ param.name }}Temp = {{ param.name }}Temp {
+                    {{ param.name }} = RouterMapper<[{{ param.typeName.array.elementTypeName }}]>().decode({{ param.name }}Temp)
+                } else {
+                    {{ param.name }} = nil
+                }
+                {% else %}
+                let {{ param.name }}Temp: String = try parameter.get("{% call urlParameterName param %}")
+                if let {{ param.name }}Mapped = RouterMapper<[{{ param.typeName.array.elementTypeName }}]>().decode({{ param.name }}Temp) {
+                    {{ param.name }} = {{ param.name }}Mapped
+                } else {
+                    throw RouterError.typeNotMatch
+                }
+                {% endif %}
+{% endmacro %}
+{% macro mapMapperArrayModel param %}
                 var {{ param.name }}: {{ param.typeName }}
                 {% if param.typeName|hasSuffix:"?" %}
                 let {{ param.name }}Temp: String? = try parameter.get("{% call urlParameterName param %}")
@@ -80,6 +115,24 @@
                 {% if param.typeName|hasSuffix:"?" %}
                 let {{ param.name }}Temp: String? = try parameter.get("{% call urlParameterName param %}")
                 if let {{ param.name }}Temp = {{ param.name }}Temp {
+                    {{ param.name }} = RouterMapper<{{ param.unwrappedTypeName }}>().decode({{ param.name }}Temp)
+                } else {
+                    {{ param.name }} = nil
+                }
+                {% else %}
+                let {% call urlParameterName param %}Temp: String = try parameter.get("{% call urlParameterName param %}")
+                if let {{ param.name }}Model = RouterMapper<{{ param.unwrappedTypeName }}>().decode({{ param.name }}Temp) {
+                    {{ param.name }} = {{ param.name }}Model
+                } else {
+                    throw RouterError.typeNotMatch
+                }
+                {% endif %}
+{% endmacro %}
+{% macro mapMapperModel param %}
+                var {{ param.name }}: {% call typeName param.typeName %}
+                {% if param.typeName|hasSuffix:"?" %}
+                let {{ param.name }}Temp: String? = try parameter.get("{% call urlParameterName param %}")
+                if let {{ param.name }}Temp = {{ param.name }}Temp {
                     {{ param.name }} = Mapper<{{ param.unwrappedTypeName }}>().map(JSONString: {{ param.name }}Temp)
                 } else {
                     {{ param.name }} = nil
@@ -93,21 +146,21 @@
                 }
                 {% endif %}
 {% endmacro %}
-import ObjectMapper
 
+// swiftlint:disable superfluous_disable_command
 public enum RouterType: String {
-{% for type in types.implementing.Routable %}
+{% for type in types.based.Routable %}
     {% if type.annotations.router %}
     case {{ type.annotations.router }} = "/{{ type.annotations.router|camelToSnakeCase }}"
     {% endif %}
 {% endfor %}
 }
 
-// swiftlint:disable all
+// swiftlint:disable line_length type_body_length
 public enum RouterParameter {
-{% for type in types.implementing.Routable %}
+{% for type in types.based.Routable %}
     {% if type.annotations.router %}
-    case {{ type.annotations.router }}{% call enumCase type.allVariables %}
+    case {{ type.annotations.router }}{% call enumCase type.variables %}
     {% endif %}
 {% endfor %}
 
@@ -128,18 +181,22 @@ public enum RouterParameter {
         }
         self = parameter
     }
-        
+
+    // swiftlint:disable line_length function_body_length unused_closure_parameter
     init?(type: RouterType, parameter: [String: Any] = [:]) {
         do {
             switch type {
-        {% for type in types.implementing.Routable %}
+        {% for type in types.based.Routable %}
             {% if type.annotations.router %}
             case .{{ type.annotations.router }}:
-                {% if type.allVariables|annotated:"parameter" %}
-                {% for param in type.allVariables|annotated:"parameter" %}
+                {% if type.variables|annotated:"parameter" %}
+                {% for param in type.variables|annotated:"parameter" %}
                     {# -----------parameter transform----------- #}
-                    {% if param.isArray %}
-                        {% if param.typeName.array.elementType.based.Mappable %}
+                    {% if param.type.kind == "enum" %}
+                        {# -----------json to enum----------- #}
+                        {% call mapEnum param %}
+                    {% elif param.isArray %}
+                        {% if param.typeName.array.elementType.based.Codable %}
                             {# -----------json to array model----------- #}
                             {% call mapArrayModel param %}
                         {% else %}
@@ -149,7 +206,7 @@ public enum RouterParameter {
                     {% elif param.isDictionary %}
                         {# -----------json to dictionary----------- #}
                         {% call mapDictionary param %}
-                    {% elif param.type.based.Mappable %}
+                    {% elif param.type.based.Codable %}
                         {# -----------json to model----------- #}
                         {% call mapModel param %}
                     {% else %}
@@ -157,7 +214,7 @@ public enum RouterParameter {
                     {% endif %}
                     {# -----------parameter transform----------- #}
                 {% endfor %}
-                self = .{{ type.annotations.router }}{% call initCase type.allVariables %}
+                self = .{{ type.annotations.router }}{% call initCase type.variables %}
                 {% else %}
                 self = .{{ type.annotations.router }}
                 {% endif %}
@@ -171,7 +228,7 @@ public enum RouterParameter {
 
     var type: RouterType {
         switch self {
-        {% for type in types.implementing.Routable %}
+        {% for type in types.based.Routable %}
         {% if type.annotations.router %}
         case .{{ type.annotations.router }}:
             return .{{ type.annotations.router }}
@@ -182,13 +239,13 @@ public enum RouterParameter {
 
     func toDictionary() -> [String: Any] {
         switch self {
-    {% for type in types.implementing.Routable %}
+    {% for type in types.based.Routable %}
         {% if type.annotations.router %}
-        {% if type.allVariables|annotated:"parameter" %}
-        case let .{{ type.annotations.router }}{% call switchCase type.allVariables %}:
+        {% if type.variables|annotated:"parameter" %}
+        case let .{{ type.annotations.router }}{% call switchCase type.variables %}:
             var parameter: [String: Any] = [:]
-            {% for param in type.allVariables|annotated:"parameter" %}
-            parameter["{{ param.name }}"] = {{ param.name }}
+            {% for param in type.variables|annotated:"parameter" %}
+            parameter["{% call urlParameterName param %}"] = {{ param.name }}
             {% endfor %}
             return parameter
         {% else %}
@@ -200,7 +257,7 @@ public enum RouterParameter {
         }
     }
 }
-// swiftlint:enable all
+// swiftlint:enable line_length type_body_length
 
 public enum RouterError: Error {
     case typeNotMatch
