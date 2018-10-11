@@ -268,7 +268,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$PODS_ROOT/Sourcery/bin/sourcery --sources \"${SRCROOT}\" --sources \"${SRCROOT}/../Sources/\" --templates \"${SRCROOT}/../Sources/Templates\" --output \"${SRCROOT}/../Sources/Templates/Generated\"\n";
+			shellScript = "$PODS_ROOT/Sourcery/bin/sourcery --sources \"${SRCROOT}/../Sources/\" --templates \"${SRCROOT}/../Sources/Templates\" --output \"${SRCROOT}/../Sources/Templates/Generated\"\n";
 		};
 		5E108247578662377EA05D42 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

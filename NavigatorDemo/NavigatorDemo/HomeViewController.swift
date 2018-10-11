@@ -19,8 +19,8 @@ class HomeViewController: BaseViewController {
         ["title": "web", "url": "navidemo://demo-navigator.com/web?url=xxx"],
     ]
     var schemes: [[String: Any]] = [
-        ["title": "detail scheme", "scheme": RouterParameter.detail(name: "AAA", uuid: "123")],
-        ["title": "web scheme", "scheme": RouterParameter.web(url: "https://www.google.com")]
+//        ["title": "detail scheme", "scheme": RouterParameter.detail(name: "AAA", uuid: "123")],
+//        ["title": "web scheme", "scheme": RouterParameter.web(url: "https://www.google.com")]
     ]
     
     override func viewDidLoad() {
