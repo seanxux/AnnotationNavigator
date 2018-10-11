@@ -6,7 +6,7 @@
 //  Copyright © 2017 GuoXiaoMei. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import URLNavigator
 
 // Global Router
