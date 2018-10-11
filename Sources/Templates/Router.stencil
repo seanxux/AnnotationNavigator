@@ -5,7 +5,6 @@
 //  Created by XUXIAOTENG on 27/03/2018.
 //  Copyright © 2018 GuoXiaoMei. All rights reserved.
 //
-import UIKit
 {% macro typeName name %}{{ name|replace:"!","" }}{% endmacro %}
 {% macro urlParameterName variable %}{% if variable.annotations.alias %}{{ variable.annotations.alias }}{% else %}{{ variable.name|camelToSnakeCase }}{% endif %}{% endmacro %}
 {% macro enumCase variables %}{% if variables|annotated:"parameter" %}({% for param in variables|annotated:"parameter" %}{{ param.name }}: {% call typeName param.typeName %}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}{% endmacro %}
@@ -146,10 +145,11 @@ import UIKit
                 }
                 {% endif %}
 {% endmacro %}
+import UIKit
 
 // swiftlint:disable superfluous_disable_command
 public enum RouterType: String {
-{% for type in types.based.Routable %}
+{% for type in types.implementing.Routable %}
     {% if type.annotations.router %}
     case {{ type.annotations.router }} = "/{{ type.annotations.router|camelToSnakeCase }}"
     {% endif %}
@@ -158,7 +158,7 @@ public enum RouterType: String {
 
 // swiftlint:disable line_length type_body_length
 public enum RouterParameter {
-{% for type in types.based.Routable %}
+{% for type in types.implementing.Routable %}
     {% if type.annotations.router %}
     case {{ type.annotations.router }}{% call enumCase type.variables %}
     {% endif %}
@@ -185,8 +185,10 @@ public enum RouterParameter {
     // swiftlint:disable line_length function_body_length unused_closure_parameter
     init?(type: RouterType, parameter: [String: Any] = [:]) {
         do {
+            {% if types.implementing.Routable.count > 0 %}
             switch type {
-        {% for type in types.based.Routable %}
+            {% endif %}
+        {% for type in types.implementing.Routable %}
             {% if type.annotations.router %}
             case .{{ type.annotations.router }}:
                 {% if type.variables|annotated:"parameter" %}
@@ -196,7 +198,7 @@ public enum RouterParameter {
                         {# -----------json to enum----------- #}
                         {% call mapEnum param %}
                     {% elif param.isArray %}
-                        {% if param.typeName.array.elementType.based.Codable %}
+                        {% if param.typeName.array.elementType.implementing.Codable %}
                             {# -----------json to array model----------- #}
                             {% call mapArrayModel param %}
                         {% else %}
@@ -206,7 +208,7 @@ public enum RouterParameter {
                     {% elif param.isDictionary %}
                         {# -----------json to dictionary----------- #}
                         {% call mapDictionary param %}
-                    {% elif param.type.based.Codable %}
+                    {% elif param.type.implementing.Codable %}
                         {# -----------json to model----------- #}
                         {% call mapModel param %}
                     {% else %}
@@ -220,26 +222,34 @@ public enum RouterParameter {
                 {% endif %}
             {% endif %}
         {% endfor %}
+            {% if types.implementing.Routable.count > 0 %}
             }
+            {% endif %}
         } catch {
             return nil
         }
     }
 
     var type: RouterType {
+        {% if types.implementing.Routable.count > 0 %}
         switch self {
-        {% for type in types.based.Routable %}
+        {% endif %}
+        {% for type in types.implementing.Routable %}
         {% if type.annotations.router %}
         case .{{ type.annotations.router }}:
             return .{{ type.annotations.router }}
         {% endif %}
         {% endfor %}
+        {% if types.implementing.Routable.count > 0 %}
         }
+        {% endif %}
     }
 
     func toDictionary() -> [String: Any] {
+        {% if types.implementing.Routable.count > 0 %}
         switch self {
-    {% for type in types.based.Routable %}
+        {% endif %}
+    {% for type in types.implementing.Routable %}
         {% if type.annotations.router %}
         {% if type.variables|annotated:"parameter" %}
         case let .{{ type.annotations.router }}{% call switchCase type.variables %}:
@@ -254,10 +264,19 @@ public enum RouterParameter {
         {% endif %}
         {% endif %}
     {% endfor %}
+        {% if types.implementing.Routable.count > 0 %}
         }
+        {% endif %}
     }
 }
 // swiftlint:enable line_length type_body_length
+
+extension RouterType {
+    // Full URL
+    var url: String {
+        return Router.scheme + "://" + Router.host + rawValue
+    }
+}
 
 public enum RouterError: Error {
     case typeNotMatch

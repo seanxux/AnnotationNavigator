@@ -12,18 +12,22 @@ import UIKit
 
 // swiftlint:disable superfluous_disable_command
 public enum RouterType: String {
+    case custom = "/custom"
     case detail = "/detail"
     case home = "/home"
     case message = "/message"
+    case _placeholder = "/_placeholder"
     case user = "/user"
     case web = "/web"
 }
 
 // swiftlint:disable line_length type_body_length
 public enum RouterParameter {
+    case custom(pageTitle: String?, url: String, param: [String: Any]?)
     case detail(name: String?, uuid: String?)
     case home
     case message
+    case _placeholder
     case user
     case web(url: String)
 
@@ -49,6 +53,17 @@ public enum RouterParameter {
     init?(type: RouterType, parameter: [String: Any] = [:]) {
         do {
             switch type {
+            case .custom:
+                let pageTitle: String? = try parameter.get("title")
+                let url: String = try parameter.get("url")
+                var param: [String: Any]?
+                let paramTemp: String? = try parameter.get("param")
+                if let paramTemp = paramTemp {
+                    param = Router.parseJSONStringIntoDictionary(JSONString: paramTemp)
+                } else {
+                    param = nil
+                }
+                self = .custom(pageTitle: pageTitle, url: url, param: param)
             case .detail:
                 let name: String? = try parameter.get("name")
                 let uuid: String? = try parameter.get("uuid")
@@ -57,6 +72,8 @@ public enum RouterParameter {
                 self = .home
             case .message:
                 self = .message
+            case ._placeholder:
+                self = ._placeholder
             case .user:
                 self = .user
             case .web:
@@ -70,12 +87,16 @@ public enum RouterParameter {
 
     var type: RouterType {
         switch self {
+        case .custom:
+            return .custom
         case .detail:
             return .detail
         case .home:
             return .home
         case .message:
             return .message
+        case ._placeholder:
+            return ._placeholder
         case .user:
             return .user
         case .web:
@@ -85,6 +106,12 @@ public enum RouterParameter {
 
     func toDictionary() -> [String: Any] {
         switch self {
+        case let .custom(pageTitle, url, param):
+            var parameter: [String: Any] = [:]
+            parameter["title"] = pageTitle
+            parameter["url"] = url
+            parameter["param"] = param
+            return parameter
         case let .detail(name, uuid):
             var parameter: [String: Any] = [:]
             parameter["name"] = name
@@ -93,6 +120,8 @@ public enum RouterParameter {
         case .home:
             return [:]
         case .message:
+            return [:]
+        case ._placeholder:
             return [:]
         case .user:
             return [:]
@@ -104,6 +133,13 @@ public enum RouterParameter {
     }
 }
 // swiftlint:enable line_length type_body_length
+
+extension RouterType {
+    // Full URL
+    var url: String {
+        return Router.scheme + "://" + Router.host + rawValue
+    }
+}
 
 public enum RouterError: Error {
     case typeNotMatch

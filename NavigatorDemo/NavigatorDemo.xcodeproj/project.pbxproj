@@ -30,6 +30,7 @@
 		D47744E32147CC44000C60BC /* RouterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47744E02147CC44000C60BC /* RouterMapper.swift */; };
 		D47744E42147CC44000C60BC /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47744E12147CC44000C60BC /* Dictionary+Extension.swift */; };
 		D47744E52147CC44000C60BC /* NavigatorType+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47744E22147CC44000C60BC /* NavigatorType+App.swift */; };
+		D47744EB214A7135000C60BC /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47744EA214A7135000C60BC /* Routable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		D47744E02147CC44000C60BC /* RouterMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterMapper.swift; sourceTree = "<group>"; };
 		D47744E12147CC44000C60BC /* Dictionary+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		D47744E22147CC44000C60BC /* NavigatorType+App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NavigatorType+App.swift"; sourceTree = "<group>"; };
+		D47744EA214A7135000C60BC /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
 		F01D9EA9D5D99127D3947DFF /* Pods_NavigatorDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NavigatorDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -123,6 +125,7 @@
 				4DF27BAA2092ED7000CCE9D9 /* NavigatorType.swift */,
 				4DF27BAD2092ED7000CCE9D9 /* NavigatorMap.swift */,
 				4DF27BAC2092ED7000CCE9D9 /* Router.swift */,
+				D47744EA214A7135000C60BC /* Routable.swift */,
 			);
 			name = Router;
 			path = ../Sources/Router;
@@ -265,7 +268,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$PODS_ROOT/Sourcery/bin/sourcery --sources \"${SRCROOT}\" --templates \"${SRCROOT}/../Sources/Templates\" --output \"${SRCROOT}/../Sources/Templates/Generated\"";
+			shellScript = "$PODS_ROOT/Sourcery/bin/sourcery --sources \"${SRCROOT}\" --sources \"${SRCROOT}/../Sources/\" --templates \"${SRCROOT}/../Sources/Templates\" --output \"${SRCROOT}/../Sources/Templates/Generated\"\n";
 		};
 		5E108247578662377EA05D42 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -309,6 +312,7 @@
 				D47744E32147CC44000C60BC /* RouterMapper.swift in Sources */,
 				D4031CB92121A6DC00B3D165 /* WebViewController.swift in Sources */,
 				4DF27BB52092ED7000CCE9D9 /* Router.swift in Sources */,
+				D47744EB214A7135000C60BC /* Routable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
