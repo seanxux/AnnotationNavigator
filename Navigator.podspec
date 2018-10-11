@@ -10,7 +10,6 @@ Pod::Spec.new do |s|
   s.author         = { "seanxu" => "xiaotengxu@gmail.com" }
   s.source         = { :git => "https://github.com/seanxux/Navigator.git", :tag => "#{s.version}" }
   s.source_files   = "Sources/**/*.swift"
-  s.exclude_files  = "Sources/Templates/Generated/*.swift"
   s.resources      = ['Sources/**/*.stencil']
   s.requires_arc   = true
   s.frameworks     = 'UIKit', 'Foundation'
