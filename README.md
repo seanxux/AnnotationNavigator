@@ -1,4 +1,4 @@
-# Navigator (自动化Router)
+# AnnotationNavigator (自动化Router)
 
 ![Swift](https://img.shields.io/badge/Swift-4.1-orange.svg)
 
