@@ -1,0 +1,7 @@
+sources:
+  - NavigatorDemo
+  - Router
+templates:
+  - Router/Templates
+output:
+  Router/Generated

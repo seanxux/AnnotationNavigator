@@ -1,6 +1,6 @@
 PODS:
-  - Sourcery (0.14.0)
-  - URLNavigator (2.0.6)
+  - Sourcery (0.16.1)
+  - URLNavigator (2.2.0)
 
 DEPENDENCIES:
   - Sourcery
@@ -12,9 +12,9 @@ SPEC REPOS:
     - URLNavigator
 
 SPEC CHECKSUMS:
-  Sourcery: 51332d15c2fc40e4ac5956e149a5d95607c63154
-  URLNavigator: 2357a32f3b3787b748bf87deb927761f8b0f7f53
+  Sourcery: 16779170d35ee204666843b09031f36721a84bcc
+  URLNavigator: 0bffc3efdeb2d97f7b5eec7ac82d290f4a099431
 
-PODFILE CHECKSUM: eb74ff35bbe006aac93879a3a696a64192fed78b
+PODFILE CHECKSUM: 0269bf7619c97cb9735983e8191db3d5e5a2d54f
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.4

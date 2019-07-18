@@ -9,7 +9,7 @@
 
 **Sourcery** is a code generator for Swift language, built on top of Apple's own SourceKit. It extends the language abstractions to allow you to generate boilerplate code automatically.
 
-It's used in over 8,000 projects on both iOS and macOS and it powers some of the most popular and critically-acclaimed apps you have used. Its massive community adoption was one of the factors that pushed Apple to implement derived Equality and automatic Codable conformance. Sourcery is maintained by a growing community of [contributors](https://github.com/krzysztofzablocki/Sourcery/graphs/contributors).
+It's used in over 30,000 projects on both iOS and macOS and it powers some of the most popular and critically-acclaimed apps you have used. Its massive community adoption was one of the factors that pushed Apple to implement derived Equality and automatic Codable conformance. Sourcery is maintained by a growing community of [contributors](https://github.com/krzysztofzablocki/Sourcery/graphs/contributors).
 
 Try **Sourcery** for your next project or add it to an existing one -- you'll save a lot of time and be happy you did!
 
@@ -74,7 +74,6 @@ There are plenty of tutorials for different uses of Sourcery, and you can always
 - _[Mint](https://github.com/yonaskolb/Mint)_
 
     Run `mint run krzysztofzablocki/Sourcery`. 
-	> Note: Constraints of SPM (see below) apply.
     
 - _Building from source_
 
@@ -84,7 +83,7 @@ There are plenty of tutorials for different uses of Sourcery, and you can always
 
         Run `swift build -c release` in the root folder. This will create a `.build/release` folder and will put the binary there. Move the **whole `.build/release` folder** to your desired destination and run with `path_to_release_folder/sourcery`
 
-        > Note: Swift and JS templates are not supported when building with SPM yet.
+        > Note: JS templates are not supported when building with SPM yet.
 
     - _Building with Xcode_
 

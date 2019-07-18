@@ -6,4 +6,4 @@ target 'NavigatorDemo' do
   pod 'URLNavigator'
 end
 
-project 'NavigatorDemo/NavigatorDemo.xcodeproj'
+project 'NavigatorDemo.xcodeproj'
